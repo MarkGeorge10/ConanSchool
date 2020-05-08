@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "956588238618",
+    "firebase_url": "https://conan-school.firebaseio.com",
+    "project_id": "conan-school",
+    "storage_bucket": "conan-school.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956588238618:android:9e63354752c3fa6e3f6ea3",
+        "android_client_info": {
+          "package_name": "com.conan.conanschool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956588238618-4c64jhe6d7ufhoo64qa3qedpdbo8207r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWaoypWaUM0kGXTIZ0JxBVE2TS2d4hWjo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956588238618-4c64jhe6d7ufhoo64qa3qedpdbo8207r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
