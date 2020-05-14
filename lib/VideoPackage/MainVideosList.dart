@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:conanschool/VideoPackage/VideoModel.dart';
 
@@ -13,7 +14,23 @@ class _MainVideosListState extends State<MainVideosList> {
 
   @override
   void initState() {
+    videos = getVideosData();
     super.initState();
+  }
+
+  Future<List<Video>> getVideosData() async {
+    List<Video> videos = [];
+    try {
+      QuerySnapshot snapshot =
+          await Firestore.instance.collection('videos').getDocuments();
+      snapshot.documents.forEach((element) {
+        videos.add(Video.fromJson(element.data));
+      });
+    } catch (e) {
+      print(e);
+    }
+
+    return videos;
   }
 
   @override
@@ -22,7 +39,46 @@ class _MainVideosListState extends State<MainVideosList> {
       appBar: AppBar(
         title: Text('Videos'),
       ),
-      body: ListView.builder(itemBuilder: null),
+      body: FutureBuilder(
+        future: videos,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasData && snapshot.data.isNotEmpty) {
+            List<Video> videos = snapshot.data;
+            return ListView.builder(
+              itemCount: videos.length,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              itemBuilder: (context, index) => Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                child: Column(
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        videos[index].thumbnailUrl,
+                        height: 220,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Text(videos[index].title)
+                  ],
+                ),
+              ),
+            );
+          } else if (snapshot.hasData && snapshot.data.isEmpty) {
+            return Center(
+              child: Text('No videos found'),
+            );
+          } else {
+            return Center(child: Text('Sorry, Something went wrong!'));
+          }
+        },
+      ),
     );
   }
 }

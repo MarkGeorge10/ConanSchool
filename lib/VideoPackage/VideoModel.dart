@@ -2,7 +2,7 @@ class Video {
   final String url;
   final String title;
   final String thumbnailUrl;
-  final List<String> categoriesIds;
+  final List<dynamic> categoriesIds;
 
   Video({this.url, this.title, this.thumbnailUrl, this.categoriesIds});
 
