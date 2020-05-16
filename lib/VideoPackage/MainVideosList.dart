@@ -76,7 +76,10 @@ class _MainVideosListState extends State<MainVideosList> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    Text(videos[index].title)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(videos[index].title),
+                    )
                   ],
                 ),
               ),
