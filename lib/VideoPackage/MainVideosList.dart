@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:conanschool/VideoPackage/VideoModel.dart';
 
 class MainVideosList extends StatefulWidget {
-  MainVideosList({Key key}) : super(key: key);
+  MainVideosList({Key key, this.categoryId}) : super(key: key);
+  final categoryId;
 
   @override
   _MainVideosListState createState() => _MainVideosListState();
@@ -14,16 +15,26 @@ class _MainVideosListState extends State<MainVideosList> {
 
   @override
   void initState() {
-    videos = getVideosData();
+    videos = getVideosData(widget.categoryId);
     super.initState();
   }
 
-  Future<List<Video>> getVideosData() async {
+  Future<List<Video>> getVideosData(String categoryId) async {
     List<Video> videos = [];
+    List<String> videoIds = [];
     try {
-      QuerySnapshot snapshot =
-          await Firestore.instance.collection('videos').getDocuments();
+      QuerySnapshot snapshot = await Firestore.instance
+          .collection('category-videos')
+          .where('categoryId', isEqualTo: categoryId)
+          .getDocuments();
       snapshot.documents.forEach((element) {
+        videoIds.add(element.data['videoId']);
+      });
+      QuerySnapshot videosSnapshot = await Firestore.instance
+          .collection('videos')
+          .where('id', whereIn: videoIds)
+          .getDocuments();
+      videosSnapshot.documents.forEach((element) {
         videos.add(Video.fromJson(element.data));
       });
     } catch (e) {
