@@ -1,3 +1,4 @@
+import 'package:conanschool/quiz_page.dart';
 import 'package:flutter/material.dart';
 
 import 'HomePackage/MasterPage.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MasterPage(),
+      home: QuizPage(),
     );
   }
 }
